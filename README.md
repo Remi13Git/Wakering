@@ -1,6 +1,6 @@
 # WakeRing - Wake Up Smart
 
-Interface Python pour communiquer avec une bague connecté via Bluetooth Low Energy (BLE).
+Interface Python pour communiquer avec votre bague connecté via Bluetooth Low Energy (BLE).
 
 ## ✨ Fonctionnalités
 
