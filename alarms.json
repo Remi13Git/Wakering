@@ -1,0 +1,23 @@
+[
+  {
+    "id": 3,
+    "hour": 6,
+    "minute": 42,
+    "label": "\ud83e\uddea Test Alarme",
+    "enabled": true
+  },
+  {
+    "id": 4,
+    "hour": 6,
+    "minute": 44,
+    "label": "\ud83e\uddea Test Alarme",
+    "enabled": true
+  },
+  {
+    "id": 5,
+    "hour": 6,
+    "minute": 49,
+    "label": "\ud83e\uddea Test Alarme",
+    "enabled": true
+  }
+]
