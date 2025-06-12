@@ -9,9 +9,10 @@ Interface Python pour communiquer avec votre bague connecté via Bluetooth Low E
 - 💓 **Mesure de fréquence cardiaque** - Capture du BPM en temps réel
 - 🫁 **Saturation en oxygène** - Mesure du taux d'O2 dans le sang
 - 🌡️ **Température corporelle** - Monitoring de la température
+- 🚶 **Nombre de pas** - Affichage du nombre de pas effectués
 - 📳 **Vibrations** - 5 types de notifications (Tips, Santé, Alarme, Appel, Rappel)
 - 🔓 **Unbind** - Dissociation de la bague
-- 📊 **Interface interactive** - Menu en ligne de commande
+- 📊 **Interface interactive** - Menu en ligne de commande 
 
 ## 🚀 Installation
 
@@ -66,12 +67,12 @@ python main.py
 ```
 🎛️ === MENU ===
 1. 📳 Vibrations
-2. 💓 Fréquence cardiaque  
+2. 💓 Fréquence cardiaque
 3. 🫁 Saturation O2
 4. 🌡️ Température
-5. 🔓 Unbind
-6. 📊 Réponses reçues
-7. 🔄 Ré-authentifier
+5. 🚶 Nombre de pas
+6. ⏰ Alarmes
+7. 🔓 Unbind
 0. 🚪 Quitter
 ```
 
@@ -86,6 +87,7 @@ python main.py
 
 ```
 wakering/
+├── alarm_manager.py    # Configuration des alarmes
 ├── config.py           # Configuration et constantes
 ├── data_analyzer.py    # Analyse des données capteurs
 ├── wakering.py         # Classe principale de communication
@@ -102,7 +104,7 @@ Dans `config.py`, changez :
 RING_ADDRESS = "38501439-08EC-00D8-9D8C-08A9FF1B1ACB"
 ```
 
-### Personnaliser les commandes
+### Identifier les commandes
 Les commandes Bluetooth sont définies dans `config.py` :
 ```python
 COMMANDS = {
@@ -128,6 +130,11 @@ COMMANDS = {
 - **Format** : Degrés Celsius (°C)
 - **Plage** : 30-45°C
 - **Position** : Offsets 14-15 des trames 20 bytes (Big Endian / 10)
+
+### Nombre de pas
+- **Format** : Little endian
+- **Plage** : 0-65535
+- **Position** : Offsets 16-17 des trames 28 bytes
 
 ## 🐛 Dépannage
 
