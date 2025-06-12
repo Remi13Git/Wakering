@@ -87,7 +87,7 @@ class AlarmManager:
               
                # Debug: afficher l'heure actuelle toutes les minutes
                if current_time.second == 0:
-                   print(f"🕐 Debug: {current_hour:02d}:{current_minute:02d}")
+                   print(f"🕐 Il est {current_hour:02d}:{current_minute:02d}")
               
                for alarm in self.alarms:
                    alarm_key = f"{alarm['id']}_{current_hour:02d}_{current_minute:02d}"

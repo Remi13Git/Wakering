@@ -96,11 +96,12 @@ class MenuManager:
                print("2. 💓 Fréquence cardiaque")
                print("3. 🫁 Saturation O2")
                print("4. 🌡️ Température")
-               print("5. ⏰ Alarmes")
-               print("6. 🔓 Unbind")
+               print("5. 🚶 Nombre de pas")
+               print("6. ⏰ Alarmes")
+               print("7. 🔓 Unbind")
                print("0. 🚪 Quitter")
               
-               choice = input("\n👉 Choix (0-6): ").strip()
+               choice = input("\n👉 Choix (0-7): ").strip()
               
                if choice == "1":
                    await self.vibration_menu()
@@ -111,8 +112,10 @@ class MenuManager:
                elif choice == "4":
                    await self.ring.measure('temperature')
                elif choice == "5":
-                   await self.alarm_menu()
+                   await self.ring.measure('steps')
                elif choice == "6":
+                   await self.alarm_menu()
+               elif choice == "7":
                    confirm = input("⚠️ Confirmer unbind? (o/N): ").strip().lower()
                    if confirm in ['o', 'oui', 'y', 'yes']:
                        if await self.ring.unbind():

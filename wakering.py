@@ -13,7 +13,7 @@ class Wakering:
        self.client = None
        self.analyzer = DataAnalyzer()
        self.is_authenticated = False
-       self.measuring_type = None  # 'heartrate', 'o2', 'temperature', None
+       self.measuring_type = None  # 'heartrate', 'o2', 'temperature', 'steps', None
 
 
 
@@ -62,6 +62,8 @@ class Wakering:
                self.analyzer.analyze_o2(data)
            elif self.measuring_type == 'temperature':
                self.analyzer.analyze_temperature(data)
+           elif self.measuring_type == 'steps':
+               self.analyzer.analyze_steps(data)
        else:
            print(f"📨 {formatted_hex}")
 
@@ -108,6 +110,31 @@ class Wakering:
        if measure_type not in COMMANDS:
            return False
       
+       # Pour les pas, mesure instantanée
+       if measure_type == 'steps':
+           print(f"🚶 Récupération du nombre de pas...")
+           self.analyzer.clear_data(measure_type)
+           self.measuring_type = measure_type
+           
+           # Envoyer commande
+           success = await self.write_data(COMMANDS[measure_type])
+           if not success:
+               self.measuring_type = None
+               return False
+           
+           # Attendre la réponse (2-3 secondes max)
+           await asyncio.sleep(3)
+           self.measuring_type = None
+           
+           # Afficher résultat
+           if self.analyzer.current_steps is not None:
+               print(f"🎯 Résultat: {self.analyzer.current_steps} pas")
+               return True
+           else:
+               print("❌ Aucun résultat pour les pas")
+               return False
+       
+       # Pour les autres mesures, fonctionnement normal
        print(f"⏳ Mesure {measure_type}...")
        self.analyzer.clear_data(measure_type)
        self.measuring_type = measure_type
@@ -127,7 +154,7 @@ class Wakering:
            if remaining > 0:
                print(f"⏱️ {remaining}s", end='\r')
       
-       # Arrêter la mesure
+       # Arrêter la mesure si nécessaire
        if measure_type == 'heartrate':
            await self.write_data(COMMANDS['heartrate_stop'])
       
@@ -140,11 +167,11 @@ class Wakering:
        elif measure_type == 'o2':
            result = self.analyzer.current_o2
            unit = "%"
-       else:  # temperature
+       elif measure_type == 'temperature':
            result = self.analyzer.current_temperature
            unit = "°C"
       
-       if result:
+       if result is not None:
            print(f"\n🎯 Résultat: {result}{unit}")
            return True
        else:
@@ -184,9 +211,10 @@ class Wakering:
            auth = "🔐 Auth" if self.is_authenticated else "🔒 Non auth"
            bpm = f"💓 {self.analyzer.current_bpm} BPM" if self.analyzer.current_bpm else "💓 -"
            o2 = f"🫁 {self.analyzer.current_o2}%" if self.analyzer.current_o2 else "🫁 -"
-           temp = f"🌡️ {self.analyzer.current_temperature:.1f}°C" if self.analyzer.current_temperature else "🌡️ -"
+           temp = f"🌡️ {self.analyzer.current_temperature:.1f} °C" if self.analyzer.current_temperature else "🌡️ -"
+           steps = f"🚶 {self.analyzer.current_steps} pas" if self.analyzer.current_steps is not None else "🚶 -"
           
-           print(f"\n📊 ✅ Connectée | {auth} | {bpm} | {o2} | {temp}")
+           print(f"\n📊 ✅ Connectée | {auth} | {bpm} | {o2} | {temp} | {steps}")
        else:
            print("\n📊 ❌ Déconnectée")
 

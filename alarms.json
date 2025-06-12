@@ -1,22 +1,22 @@
 [
   {
+    "id": 1,
+    "hour": 4,
+    "minute": 33,
+    "label": "\ud83e\uddea Test Alarme",
+    "enabled": true
+  },
+  {
+    "id": 2,
+    "hour": 7,
+    "minute": 32,
+    "label": "ok",
+    "enabled": true
+  },
+  {
     "id": 3,
-    "hour": 6,
-    "minute": 42,
-    "label": "\ud83e\uddea Test Alarme",
-    "enabled": true
-  },
-  {
-    "id": 4,
-    "hour": 6,
-    "minute": 44,
-    "label": "\ud83e\uddea Test Alarme",
-    "enabled": true
-  },
-  {
-    "id": 5,
-    "hour": 6,
-    "minute": 49,
+    "hour": 4,
+    "minute": 33,
     "label": "\ud83e\uddea Test Alarme",
     "enabled": true
   }
